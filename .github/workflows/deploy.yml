@@ -3,22 +3,27 @@ name: Deploy to Hostinger
 on:
   push:
     branches:
-      - main # Changez si vous déployez depuis une autre branche
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout le code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Configurer l'environnement pour FTP
       - name: Install LFTP
         run: sudo apt-get install lftp
 
-      # 3. Déploiement via FTP
+      - name: Debug environment variables
+        run: |
+          echo "FTP_HOST=${{ secrets.FTP_HOST }}"
+          echo "FTP_USERNAME=${{ secrets.FTP_USERNAME }}"
+          echo "FTP_TARGET_DIR=${{ secrets.FTP_TARGET_DIR }}"
+        env:
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }} # Evite l'exposition directe du mot de passe.
+
       - name: Deploy to Hostinger via FTP
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
@@ -26,7 +31,8 @@ jobs:
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           FTP_TARGET_DIR: ${{ secrets.FTP_TARGET_DIR }}
         run: |
-          lftp -c "
+          lftp -d -c "
+          set ftp:passive-mode true;
           open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST;
           mirror -R ./ $FTP_TARGET_DIR --delete --verbose;
           bye
