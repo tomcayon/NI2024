@@ -8,25 +8,19 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: deploy # Spécifie l'environnement "deploy"
-
+    environment: deploy # Utilisation de l'environnement "deploy"
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install LFTP
-        run: sudo apt-get install lftp
-
-      - name: Deploy to Hostinger via FTP
-        env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          FTP_TARGET_DIR: ${{ secrets.FTP_TARGET_DIR }}
-        run: |
-          lftp -d -c "
-          set ftp:passive-mode true;
-          open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_HOST;
-          mirror -R ./ $FTP_TARGET_DIR --delete --verbose;
-          bye
-          "
+      - name: Upload files to Hostinger via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ftp://147.79.103.159 # Adresse de votre serveur FTP Hostinger
+          username: ${{ secrets.FTP_USERNAME }} # Nom d'utilisateur FTP
+          password: ${{ secrets.FTP_PASSWORD }} # Mot de passe FTP
+          local-dir: ./ # Répertoire local à déployer
+          server-dir: ${{ secrets.FTP_TARGET_DIR }} # Répertoire cible sur Hostinger
+          exclude: |
+            **/.git**
+            **/.github**
