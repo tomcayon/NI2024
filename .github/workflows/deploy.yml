@@ -16,7 +16,7 @@ jobs:
       - name: Upload files to Hostinger via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          server: ftp://147.79.103.159 # Adresse de votre serveur FTP Hostinger
+          server: ${{ secrets.FTP_HOST }} # Adresse de votre serveur FTP Hostinger
           username: ${{ secrets.FTP_USERNAME }} # Nom d'utilisateur FTP
           password: ${{ secrets.FTP_PASSWORD }} # Mot de passe FTP
           local-dir: ./ # Répertoire local à déployer
