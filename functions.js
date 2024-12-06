@@ -27,4 +27,47 @@
   
   })(window, document, undefined);
 
-  
+  let pointsDeVie = 75;  
+
+  function healOcean() {
+    if (pointsDeVie < 100){
+        pointsDeVie += 25
+    }
+    changeBackground()
+  }
+
+  function destroyOcean() {
+    if (pointsDeVie <= 100 && pointsDeVie >= 25){
+        pointsDeVie -= 25
+    }
+    changeBackground()
+  }
+
+  function changeBackground() {
+    const div = document.getElementById('map');
+    
+    // Ajouter la classe fade-out pour commencer le fondu
+    div.classList.add('fade-out');
+    
+    // Après un délai pour permettre l'animation de fondu
+    setTimeout(function() {
+        switch(pointsDeVie){
+        case 100:
+            div.style.backgroundImage = "url('assets/Ocean.png')";
+            break;
+        case 75:
+            div.style.backgroundImage = "url('assets/ocean_STEP1.png')";
+            break;
+        case 50:
+            div.style.backgroundImage = "url('assets/ocean_STEP2.png')";
+            break;
+        case 25:
+            div.style.backgroundImage = "url('assets/ocean_STEP2.png')";
+            break;
+        }
+
+      // Enlever la classe fade-out et ajouter la classe fade-in pour démarrer le fondu vers l'image suivante
+      div.classList.remove('fade-out');
+      div.classList.add('fade-in');
+    }, 100); // Le délai correspond à la durée de l'animation de fondu
+  }
