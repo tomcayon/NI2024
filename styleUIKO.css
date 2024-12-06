@@ -3,6 +3,9 @@ body {
     background-repeat: no-repeat;
     width: 100%;
     height: 100%;
+    font-family: "MyHelvetica";
+    src: local("Helvetica Neue Bold"), local("HelveticaNeue-Bold"),
+      url("Water\ Park.ttf");
 }
 
 footer {
@@ -71,6 +74,7 @@ footer {
 }
 
 .questionBox {
+
     flex-direction: column;
     border : red 1px solid;
     border-radius: 15px;
