@@ -27,7 +27,7 @@
   
   })(window, document, undefined);
 
-  let pointsDeVie = 75;  
+  // let pointsDeVie = 75;  
 
   function healOcean() {
     if (pointsDeVie < 100){
