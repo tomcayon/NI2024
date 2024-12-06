@@ -7,8 +7,8 @@
         const boat = document.getElementById('boat');
         mapdiv.addEventListener("click", (event) => {
             // Récupère les coordonnées du clic
-            const x = event.clientX;
-            const y = event.clientY;
+            const x = event.pageX;
+            const y = event.pageY;
 
             const boatRect = boat.getBoundingClientRect();
             const boatX = boatRect.left + boatRect.width / 2;
@@ -63,6 +63,7 @@
             break;
         case 25:
             div.style.backgroundImage = "url('assets/ocean_DARK.png')";
+
             break;
         }
 
