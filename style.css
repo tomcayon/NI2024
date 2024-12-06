@@ -1,12 +1,40 @@
-body {
-    background-image: url('./assets/Ocean.png');
-    background-repeat: no-repeat;
+
+html, body {
+    margin: 0;
+    padding: 0;
     width: 100%;
     height: 100%;
-    overflow-x: hidden;
+    overflow: auto;
+    background-color: darkblue;
+}
+
+main {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
+    padding: 0;
+    height: 100vh; /* Prend 100% de la hauteur visible */
+    width: 100%;
+}
 
+#map {
+    background-image: url('./assets/Ocean.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 200vh; /* Crée un débordement léger au-delà d'une hauteur d'écran */
+}
+
+
+/* Ajuster le footer */
+footer {
+    position: fixed;
+    padding: 5px;
+    color: #fff;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0; /* Supprimer les marges qui peuvent causer des débordements */
 }
 
 .boat {
@@ -144,28 +172,6 @@ footer {
     margin: 0;
 }
 
-#map{
-
-    background-image: url('./assets/Ocean.png');
-    width: 100%;
-    aspect-ratio: 16/9;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transform: rotate(90deg );
-    height: 100vw;
-    margin: 0;
-    padding: 0;
-    
-
-}
-
-main{
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-}
-
 @media (max-width: 550px) {
     #container-question {
         width: 100%;
@@ -212,4 +218,21 @@ main{
         margin: 5px 0;
     }
 
+}
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: darkblue;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: lightseagreen;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: darkcyan;
+    
 }
