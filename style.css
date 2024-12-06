@@ -28,6 +28,7 @@ body {
 .boat {
     width: 300px; 
     height: auto;
+    user-select: none;
 } 
 
 #boat {
