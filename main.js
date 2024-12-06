@@ -1,6 +1,18 @@
 answerContainer = document.querySelector(".question-container");
 questionContainer = document.querySelector(".questionText");
+body=document.getElementById("body");
 
+const dictionnary_response={
+    1: 0,
+    2: 0,
+    3: 1,
+    4: 0,
+    5: 1,
+    6:0
+};
+var selectedQuestion=0;
+var explain_true="";
+var explain_false="";
 function questionTableJSON(json_data, index) {
     const questionsAndAnswers = {};
     const data = JSON.parse(json_data);
@@ -19,22 +31,71 @@ function questionTableJSON(json_data, index) {
             explain_true: explainTrue,
             explain_false: explainFalse
         }
-    });        
-
+    });
+    console.log(index);
     if (questionContainer) {
             newElement = document.createElement("h2");
-            newElement.innerText = questionsAndAnswers[index].question;            
+            newElement.innerText = questionsAndAnswers[index].question;
             questionContainer.appendChild(newElement);
-
+            explainTrue = questionsAndAnswers[index].explain_true;
+            explainFalse = questionsAndAnswers[index].explain_false;
             for (let i = 0; i < questionsAndAnswers[index].answer.length; i++) {
                 newElement = document.createElement("a");
                 newElement.classList.add("answer-box");
                 newElement.innerText = questionsAndAnswers[index].answer[i];
+                newElement.id = `${i}`;
                 answerContainer.appendChild(newElement);
             }
     }
 
 }
+
+function generateSprit(numberSprit) {
+    for (let i = 0; i < numberSprit; i++) {
+        const widthScreen = screen.width;
+        const heightScreen = screen.height;
+        const left = Math.floor(Math.random() * widthScreen);
+        const top = Math.floor(Math.random() * heightScreen);
+
+        const newElement = document.createElement("a");
+        newElement.classList.add("sprit");
+        newElement.style.left = `${left}px`;
+        newElement.style.top = `${top}px`;
+        newElement.id = `${i+1}`;
+
+
+        document.body.appendChild(newElement);
+    }
+}
+
+document.addEventListener("click", function(event) {
+
+    if (event.target && event.target.classList.contains("sprit")) {
+        answerContainer.innerHTML = "";
+        questionContainer.innerHTML = "";
+        console.log("Un élément sprit a été cliqué ! ID : " + event.target.id);
+        questionTableJSON(json_data, event.target.id);
+        selectedQuestion=event.target.id;
+
+    }else if (event.target && event.target.classList.contains("answer-box")) {
+        answerContainer.innerHTML = "";
+        questionContainer.innerHTML = "";
+        response = dictionnary_response[selectedQuestion];
+
+        if(response==event.target.id){
+            questionContainer.innerText = explainTrue;
+        }else{
+            questionContainer.innerText = explainFalse;
+        }
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function(event) {
+    generateSprit(6);
+});
+
+
+
 
 const json_data = `
 {
@@ -102,36 +163,8 @@ const json_data = `
             ],
             "explain_true": "Le corps humain ainsi que les océans sont des écosystèmes constitués d’une grande variété de sous-éléments qui leur permettent de survivre. Ainsi, de la même façon que les poumons chez l’Homme ont pour rôle d’oxygéner le sang, les phytoplanctons produisent du dioxygène grâce à la photosynthèse, élément indispensable à la vie.",
             "explain_false": "Le corps humain ainsi que les océans sont des écosystèmes constitués d’une grande variété de sous-éléments qui leur permettent de survivre. Ainsi, de la même façon que les poumons chez l’Homme ont pour rôle d’oxygéner le sang, les phytoplanctons produisent du dioxygène grâce à la photosynthèse, élément indispensable à la vie."
-        },
-        {
-            "question_order": 7,
-            "question": "",
-            "answer": [
-
-            ],
-            "explain_true": "",
-            "explain_false": ""
-        },
-        {
-            "question_order": 8,
-            "question": "",
-            "answer": [
-
-            ],
-            "explain_true": "",
-            "explain_false": ""
-        },
-        {
-            "question_order": 9,
-            "question": "",
-            "answer": [
-
-            ],
-            "explain_true": "",
-            "explain_false": ""
         }
     ]
 }
 `;
 
-questionTableJSON(json_data, 1);
