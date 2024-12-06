@@ -64,7 +64,7 @@ footer {
     position: sticky;
     bottom: 0;
     margin: 10px;
-    z-index: 10;
+    z-index: 6;
 
 }
 
@@ -75,6 +75,8 @@ footer {
     flex-direction: row;
     align-items: center;
     flex-wrap: nowrap; /* Les éléments ne retournent pas à la ligne */
+    
+
 }
 
 .question-box {
@@ -246,10 +248,15 @@ footer {
 .sprit{
     height: 50px;
     width: 50px;
-    background-color: red;
     position: absolute;
     top: 110%;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 2;
+    background-size: 100%,100%; /* Étire pour couvrir tout le conteneur */
+    background-image: './assets/petroleum.png';
 
+}
+.petroleum{
+    background-image: './assets/petroleum.png';
 }

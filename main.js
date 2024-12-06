@@ -1,3 +1,4 @@
+
 answerContainer = document.querySelector(".question-container");
 questionContainer = document.querySelector(".questionText");
 body=document.getElementById("body");
@@ -42,6 +43,7 @@ function questionTableJSON(json_data, index) {
             for (let i = 0; i < questionsAndAnswers[index].answer.length; i++) {
                 newElement = document.createElement("a");
                 newElement.classList.add("answer-box");
+                newElement.classList.add("question-box");
                 newElement.innerText = questionsAndAnswers[index].answer[i];
                 newElement.id = `${i}`;
                 answerContainer.appendChild(newElement);
@@ -51,16 +53,20 @@ function questionTableJSON(json_data, index) {
 }
 
 function generateSprit(numberSprit) {
+    let listIcons = ['./assets/petroleum.png','./assets/kraken.png','./assets/pirate-ship.png',
+        './assets/rock.png','./assets/fishfilet.png','./assets/fish-bone.png'
+    ]
     for (let i = 0; i < numberSprit; i++) {
         const widthScreen = screen.width;
         const heightScreen = screen.height;
         const left = Math.floor(Math.random() * widthScreen);
         const top = Math.floor(Math.random() * heightScreen);
 
-        const newElement = document.createElement("a");
+        const newElement = document.createElement("img");
         newElement.classList.add("sprit");
         newElement.style.left = `${left}px`;
         newElement.style.top = `${top}px`;
+        newElement.src = listIcons[i];
         newElement.id = `${i+1}`;
 
 
@@ -68,8 +74,71 @@ function generateSprit(numberSprit) {
     }
 }
 
-document.addEventListener("click", function(event) {
+let pointsDeVie = 75;  
 
+  function healOcean() {
+    if (pointsDeVie <= 100){
+        pointsDeVie += 25
+    }
+    changeBackground()
+  }
+
+  function destroyOcean() {
+    if (pointsDeVie>0){
+        pointsDeVie -= 25
+    }
+    changeBackground()
+  }
+
+  function changeBackground() {
+    const div = document.getElementById('map');
+    
+    // Ajouter la classe fade-out pour commencer le fondu
+    div.classList.add('fade-out');
+    
+    // Après un délai pour permettre l'animation de fondu
+    setTimeout(function() {
+        switch(pointsDeVie){
+        case 100:
+            div.style.backgroundImage = "url('assets/Ocean.png')";
+            document.getElementById('fisherman').src = "./assets/fisherman.png";
+            break;
+        case 75:
+            div.style.backgroundImage = "url('assets/ocean_STEP1.png')";
+            document.getElementById('fisherman').src = "./assets/fisherman2.png";
+            break;
+        case 50:
+            div.style.backgroundImage = "url('assets/ocean_STEP2.png')";
+            document.getElementById('fisherman').src = "./assets/fisherman3.png";
+            break;
+        case 25:
+            div.style.backgroundImage = "url('assets/ocean_DARK.png')";
+            document.getElementById('fisherman').src = "./assets/skeleton1.png";
+            break;
+        }
+
+      // Enlever la classe fade-out et ajouter la classe fade-in pour démarrer le fondu vers l'image suivante
+      div.classList.remove('fade-out');
+      div.classList.add('fade-in');
+    }, 100); // Le délai correspond à la durée de l'animation de fondu
+  }
+document.addEventListener("click", function(event) {
+    const mapdiv = document.getElementById('map');
+    const boat = document.getElementById('boat');
+    const x = event.pageX;
+    const y = event.pageY;
+
+    const boatRect = boat.getBoundingClientRect();
+    const boatX = boatRect.left + boatRect.width / 2;
+    const boatY = boatRect.top + boatRect.height / 2;
+
+    const deltaX = x - boatX;
+    const deltaY = y - boatY;
+    const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+    console.log(angle)
+
+    // Déplace l'élément "boat" à ces coordonnées
+    boat.style.transform = `translate(${x}px, ${y}px) rotate(${Math.round(angle)}deg)`;
     if (event.target && event.target.classList.contains("sprit")) {
         answerContainer.innerHTML = "";
         questionContainer.innerHTML = "";
@@ -84,8 +153,10 @@ document.addEventListener("click", function(event) {
 
         if(response==event.target.id){
             questionContainer.innerText = explainTrue;
+            healOcean();
         }else{
             questionContainer.innerText = explainFalse;
+            destroyOcean();
         }
     }
 });
@@ -93,7 +164,6 @@ document.addEventListener("click", function(event) {
 document.addEventListener("DOMContentLoaded", function(event) {
     generateSprit(6);
 });
-
 
 
 
