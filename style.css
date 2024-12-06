@@ -8,6 +8,22 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 
 }
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: darkblue;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: lightseagreen;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: darkcyan;
+}
 
 .boat {
     width: 300px; 
