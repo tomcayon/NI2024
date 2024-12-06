@@ -39,7 +39,6 @@ footer {
     gap: 12px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
     align-items: center;
     flex-wrap: nowrap; /* Les éléments ne retournent pas à la ligne */
 }
@@ -72,7 +71,6 @@ footer {
 .container {
     width: 100%;
     display: flex;
-    align-items: center;
     margin-top: 10px;
     position: relative; /* Pour positionner le fisherman */
 }
@@ -129,18 +127,15 @@ footer {
 
 @media (max-width: 550px) {
     #container-question {
-        width: 100%;
-        min-width: 0;
-        max-width: 100%;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
+    }
+
+    .container-barLife{
+        margin-bottom: 35% !important;
     }
 
     .question-container {
         display: grid;
-        gap: 0;
+        gap: 12px;
         grid-template-columns: auto auto;
     }
 
@@ -152,13 +147,20 @@ footer {
 
 @media (max-width: 1000px) {
     #container-question {
-        width: 100%;
+        width: clac(100% - 20px);
         min-width: 0;
         max-width: 100%;
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
+    }
+
+    .container-barLife{
+        display: flex;
+        margin-bottom: 5%;
+        align-items: center;
+        justify-content: center;
     }
 
     #fisherman {
