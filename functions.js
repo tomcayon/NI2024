@@ -62,7 +62,8 @@
             div.style.backgroundImage = "url('assets/ocean_STEP2.png')";
             break;
         case 25:
-            div.style.backgroundImage = "url('assets/ocean_STEP2.png')";
+            div.style.backgroundImage = "url('assets/ocean_DARK.png')";
+
             break;
         }
 
